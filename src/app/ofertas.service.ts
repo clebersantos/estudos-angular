@@ -7,7 +7,9 @@ import { URL_API } from './app.api'
 @Injectable()
 export class OfertasService {
     private url_ofertas = `${URL_API}/ofertas`;
-
+    private url_como_usar = `${URL_API}/como-usar`;
+    private url_onde_fica = `${URL_API}/onde-fica`;
+    
     constructor(private http: HttpClient) {}
 
     public getOfertas(): Promise<Oferta[]> {
@@ -27,5 +29,17 @@ export class OfertasService {
         return this.http.get(`${this.url_ofertas}?id=${id}`)
         .toPromise()
         .then((resposta: any) => resposta.shift());
+    }
+
+    public getComoUsarOfertaPorId(id: number): Promise<string> {
+        return this.http.get(`${this.url_como_usar}?id=${id}`)
+        .toPromise()
+        .then((resposta: any) => resposta.shift().descricao);
+    }
+
+    public getOndeFicaOfertaPorId(id: number): Promise<string> {
+        return this.http.get(`${this.url_onde_fica}?id=${id}`)
+        .toPromise()
+        .then((resposta: any) => resposta.shift().descricao);
     }
 }
